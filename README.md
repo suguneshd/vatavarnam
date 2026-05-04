@@ -6,10 +6,11 @@ Vatavarnam is a smart weather web app that provides real-time weather data along
 
 * 🔍 Search weather by city
 * 🌡️ Real-time temperature, humidity, and wind data
-* 📅 Weather forecast display
+* 📅 5 days Weather forecast display
 * ⚠️ Smart suggestions (e.g., carry umbrella, avoid heat)
 * 🎨 Responsive UI using Tailwind CSS
 * 🔄 Dynamic updates using React Hooks
+
 
 # Tech Stack
 
@@ -23,5 +24,5 @@ Vatavarnam is a smart weather web app that provides real-time weather data along
 
 The goal of Vatavarnam is to transform weather data into meaningful insights using modern frontend technologies like React, making it both informative and practical.
 
-Author
+# Members
 Rusheel Chandra Nirmala, Sharath Chandra Reddy Maryada, Sugunesh Dande
