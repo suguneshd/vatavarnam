@@ -4,37 +4,37 @@ import WeatherCard from "./components/WeatherCard";
 import ForecastItem from "./components/ForecastItem";
 import CityCard from "./components/CityCard";
 
-const API_KEY  = "b6981ddb459abfa25f8eb8be571a1db1";
+const API_KEY = "b6981ddb459abfa25f8eb8be571a1db1";
 const API_BASE = "https://api.openweathermap.org/data/2.5";
 
 // Default cities: 10 Indian + 5 global
 const DEFAULT_CITIES = [
-  { name: "Mumbai",    country: "IN", flag: "🇮🇳", desc: "The city of dreams, monsoon capital" },
-  { name: "Delhi",     country: "IN", flag: "🇮🇳", desc: "India's scorching capital city" },
+  { name: "Mumbai", country: "IN", flag: "🇮🇳", desc: "The city of dreams, monsoon capital" },
+  { name: "Delhi", country: "IN", flag: "🇮🇳", desc: "India's scorching capital city" },
   { name: "Bangalore", country: "IN", flag: "🇮🇳", desc: "Garden city & IT hub of India" },
-  { name: "Chennai",   country: "IN", flag: "🇮🇳", desc: "Gateway to South India" },
-  { name: "Kolkata",   country: "IN", flag: "🇮🇳", desc: "Cultural capital of India" },
+  { name: "Chennai", country: "IN", flag: "🇮🇳", desc: "Gateway to South India" },
+  { name: "Kolkata", country: "IN", flag: "🇮🇳", desc: "Cultural capital of India" },
   { name: "Hyderabad", country: "IN", flag: "🇮🇳", desc: "City of Nawabs & biryani" },
-  { name: "Pune",      country: "IN", flag: "🇮🇳", desc: "Oxford of the East" },
-  { name: "Jaipur",    country: "IN", flag: "🇮🇳", desc: "The Pink City of Rajasthan" },
+  { name: "Pune", country: "IN", flag: "🇮🇳", desc: "Oxford of the East" },
+  { name: "Jaipur", country: "IN", flag: "🇮🇳", desc: "The Pink City of Rajasthan" },
   { name: "Ahmedabad", country: "IN", flag: "🇮🇳", desc: "Vibrant heart of Gujarat" },
-  { name: "Kochi",     country: "IN", flag: "🇮🇳", desc: "Queen of the Arabian Sea" },
-  { name: "Tokyo",     country: "JP", flag: "🇯🇵", desc: "Neon metropolis of the east" },
-  { name: "London",    country: "GB", flag: "🇬🇧", desc: "Where fog meets history" },
-  { name: "New York",  country: "US", flag: "🇺🇸", desc: "The city that never sleeps" },
-  { name: "Dubai",     country: "AE", flag: "🇦🇪", desc: "Jewel of the Persian Gulf" },
-  { name: "Sydney",    country: "AU", flag: "🇦🇺", desc: "Harbour city down under" },
+  { name: "Kochi", country: "IN", flag: "🇮🇳", desc: "Queen of the Arabian Sea" },
+  { name: "Tokyo", country: "JP", flag: "🇯🇵", desc: "Neon metropolis of the east" },
+  { name: "London", country: "GB", flag: "🇬🇧", desc: "Where fog meets history" },
+  { name: "New York", country: "US", flag: "🇺🇸", desc: "The city that never sleeps" },
+  { name: "Dubai", country: "AE", flag: "🇦🇪", desc: "Jewel of the Persian Gulf" },
+  { name: "Sydney", country: "AU", flag: "🇦🇺", desc: "Harbour city down under" },
 ];
 
 // Animated floating cloud background
 function Clouds() {
   const clouds = [
-    { w: 180, h: 60,  top: "8%",  delay: "0s",  dur: "28s",  blur: 3 },
-    { w: 260, h: 80,  top: "18%", delay: "6s",  dur: "40s",  blur: 4 },
-    { w: 140, h: 50,  top: "35%", delay: "12s", dur: "22s",  blur: 2 },
-    { w: 320, h: 90,  top: "55%", delay: "4s",  dur: "50s",  blur: 5 },
-    { w: 200, h: 65,  top: "72%", delay: "18s", dur: "35s",  blur: 3 },
-    { w: 110, h: 40,  top: "88%", delay: "9s",  dur: "26s",  blur: 2 },
+    { w: 180, h: 60, top: "8%", delay: "0s", dur: "28s", blur: 3 },
+    { w: 260, h: 80, top: "18%", delay: "6s", dur: "40s", blur: 4 },
+    { w: 140, h: 50, top: "35%", delay: "12s", dur: "22s", blur: 2 },
+    { w: 320, h: 90, top: "55%", delay: "4s", dur: "50s", blur: 5 },
+    { w: 200, h: 65, top: "72%", delay: "18s", dur: "35s", blur: 3 },
+    { w: 110, h: 40, top: "88%", delay: "9s", dur: "26s", blur: 2 },
   ];
 
   return (
@@ -44,10 +44,10 @@ function Clouds() {
           key={i}
           className="cloud"
           style={{
-            width:  c.w,
+            width: c.w,
             height: c.h,
-            top:    c.top,
-            animationDelay:    c.delay,
+            top: c.top,
+            animationDelay: c.delay,
             animationDuration: c.dur,
             filter: `blur(${c.blur}px)`,
             left: "-200px",
@@ -60,35 +60,35 @@ function Clouds() {
 
 export default function App() {
   // Custom cursor
-  const cursorRef    = useRef(null);
+  const cursorRef = useRef(null);
   const [clicking, setClicking] = useState(false);
 
   useEffect(() => {
     const move = (e) => {
       if (cursorRef.current) {
         cursorRef.current.style.left = e.clientX + "px";
-        cursorRef.current.style.top  = e.clientY + "px";
+        cursorRef.current.style.top = e.clientY + "px";
       }
     };
     const down = () => setClicking(true);
-    const up   = () => setClicking(false);
+    const up = () => setClicking(false);
     window.addEventListener("mousemove", move);
     window.addEventListener("mousedown", down);
-    window.addEventListener("mouseup",   up);
+    window.addEventListener("mouseup", up);
     return () => {
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mousedown", down);
-      window.removeEventListener("mouseup",   up);
+      window.removeEventListener("mouseup", up);
     };
   }, []);
 
   // State
-  const [cityInput,   setCityInput]   = useState("");
+  const [cityInput, setCityInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [weather,     setWeather]     = useState(null);
-  const [forecast,    setForecast]    = useState([]);
-  const [isLoading,   setIsLoading]   = useState(false);
-  const [error,       setError]       = useState("");
+  const [weather, setWeather] = useState(null);
+  const [forecast, setForecast] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const [cityWeather, setCityWeather] = useState({});
   const [loadingCities, setLoadingCities] = useState(true);
 
@@ -100,14 +100,14 @@ export default function App() {
       await Promise.allSettled(
         DEFAULT_CITIES.map(async (c) => {
           try {
-            const res  = await fetch(
+            const res = await fetch(
               `${API_BASE}/weather?q=${encodeURIComponent(c.name)},${c.country}&appid=${API_KEY}&units=metric`
             );
             if (res.ok) {
               const data = await res.json();
               results[c.name] = data;
             }
-          } catch (_) {}
+          } catch (_) { }
         })
       );
       setCityWeather(results);
@@ -136,7 +136,7 @@ export default function App() {
               : "Something went wrong. Please try again."
           );
         }
-        const weatherData  = await weatherRes.json();
+        const weatherData = await weatherRes.json();
         const forecastData = await forecastRes.json();
         setWeather(weatherData);
         setForecast(
@@ -187,7 +187,7 @@ export default function App() {
             <div className="inline-flex items-center gap-3 mb-4">
               <span className="text-5xl md:text-6xl animate-float-slow">☁️</span>
               <h1 className="font-display text-5xl md:text-7xl font-black text-white drop-shadow-lg tracking-tight">
-                వాతావరణం
+                VATAVARNAM
               </h1>
               <span className="text-5xl md:text-6xl animate-float-medium" style={{ animationDelay: "1s" }}>🌤️</span>
             </div>

@@ -5,34 +5,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Custom Cursor ─────────────────────────────────────────────────────────── */
-*,
-*::before,
-*::after {
-  cursor: none !important;
+*, *::before, *::after {
   box-sizing: border-box;
-}
-
-.cursor-bolt {
-  position: fixed;
-  width: 36px;
-  height: 36px;
-  pointer-events: none;
-  z-index: 99999;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s ease, filter 0.2s ease;
-  font-size: 26px;
-  line-height: 1;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  filter: drop-shadow(0 0 8px #5ab4f5) drop-shadow(0 0 14px #0ea5e9);
-}
-
-.cursor-bolt.clicking {
-  transform: translate(-50%, -50%) scale(0.75);
-  filter: drop-shadow(0 0 18px #fff) drop-shadow(0 0 30px #5ab4f5);
 }
 
 /* ── Smooth Scroll ─────────────────────────────────────────────────────────── */
