@@ -7,9 +7,8 @@ import CityCard from "./components/CityCard";
 const API_KEY  = "b6981ddb459abfa25f8eb8be571a1db1";
 const API_BASE = "https://api.openweathermap.org/data/2.5";
 
-// 10 Indian cities + 5 foreign cities shown by default
+// Default cities: 10 Indian + 5 global
 const DEFAULT_CITIES = [
-  // Indian cities
   { name: "Mumbai",    country: "IN", flag: "🇮🇳", desc: "The city of dreams, monsoon capital" },
   { name: "Delhi",     country: "IN", flag: "🇮🇳", desc: "India's scorching capital city" },
   { name: "Bangalore", country: "IN", flag: "🇮🇳", desc: "Garden city & IT hub of India" },
@@ -20,7 +19,6 @@ const DEFAULT_CITIES = [
   { name: "Jaipur",    country: "IN", flag: "🇮🇳", desc: "The Pink City of Rajasthan" },
   { name: "Ahmedabad", country: "IN", flag: "🇮🇳", desc: "Vibrant heart of Gujarat" },
   { name: "Kochi",     country: "IN", flag: "🇮🇳", desc: "Queen of the Arabian Sea" },
-  // Foreign cities
   { name: "Tokyo",     country: "JP", flag: "🇯🇵", desc: "Neon metropolis of the east" },
   { name: "London",    country: "GB", flag: "🇬🇧", desc: "Where fog meets history" },
   { name: "New York",  country: "US", flag: "🇺🇸", desc: "The city that never sleeps" },
@@ -28,7 +26,7 @@ const DEFAULT_CITIES = [
   { name: "Sydney",    country: "AU", flag: "🇦🇺", desc: "Harbour city down under" },
 ];
 
-// Floating cloud layer
+// Animated floating cloud background
 function Clouds() {
   const clouds = [
     { w: 180, h: 60,  top: "8%",  delay: "0s",  dur: "28s",  blur: 3 },
@@ -61,7 +59,7 @@ function Clouds() {
 }
 
 export default function App() {
-  // ── Cursor ──────────────────────────────────────────────────────────────────
+  // Custom cursor
   const cursorRef    = useRef(null);
   const [clicking, setClicking] = useState(false);
 
@@ -84,17 +82,17 @@ export default function App() {
     };
   }, []);
 
-  // ── State ───────────────────────────────────────────────────────────────────
+  // State
   const [cityInput,   setCityInput]   = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [weather,     setWeather]     = useState(null);
   const [forecast,    setForecast]    = useState([]);
   const [isLoading,   setIsLoading]   = useState(false);
   const [error,       setError]       = useState("");
-  const [cityWeather, setCityWeather] = useState({});      // {cityName: weatherObj}
+  const [cityWeather, setCityWeather] = useState({});
   const [loadingCities, setLoadingCities] = useState(true);
 
-  // ── Fetch all default city weathers on mount ─────────────────────────────
+  // Fetch all default city weather on mount
   useEffect(() => {
     async function fetchAllCities() {
       setLoadingCities(true);
@@ -118,7 +116,7 @@ export default function App() {
     fetchAllCities();
   }, []);
 
-  // ── Search fetch ────────────────────────────────────────────────────────────
+  // Fetch weather for searched city
   useEffect(() => {
     if (!searchQuery) return;
     async function fetchWeather() {
@@ -151,7 +149,6 @@ export default function App() {
       }
     }
     fetchWeather();
-    // Scroll to results
     setTimeout(() => {
       document.getElementById("weather-result")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 300);
@@ -170,7 +167,7 @@ export default function App() {
 
   return (
     <>
-      {/* ── Custom Thunderbolt Cursor ─────────────────────────────────────── */}
+      {/* Cursor */}
       <div
         ref={cursorRef}
         className={`cursor-bolt ${clicking ? "clicking" : ""}`}
@@ -179,13 +176,13 @@ export default function App() {
         ⚡
       </div>
 
-      {/* ── Animated Sky Background ──────────────────────────────────────── */}
+      {/* Sky background */}
       <div className="sky-bg font-sans">
         <Clouds />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 py-8 md:py-14">
 
-          {/* ── Hero Header ──────────────────────────────────────────────── */}
+          {/* Header */}
           <header className="text-center mb-12 animate-fade-in">
             <div className="inline-flex items-center gap-3 mb-4">
               <span className="text-5xl md:text-6xl animate-float-slow">☁️</span>
@@ -202,7 +199,7 @@ export default function App() {
             </p>
           </header>
 
-          {/* ── Search Bar (centered, hero) ───────────────────────────────── */}
+          {/* Search */}
           <section id="search" className="relative z-50 flex justify-center mb-16 animate-slide-up" style={{ animationDelay: "0.2s" }}>
             <SearchBar
               value={cityInput}
@@ -211,9 +208,9 @@ export default function App() {
             />
           </section>
 
-          {/* ── Search Result Zone ───────────────────────────────────────── */}
+          {/* Weather result */}
           <div id="weather-result">
-            {/* Loading */}
+            {/* Loading state */}
             {isLoading && (
               <div className="flex flex-col items-center justify-center py-16 animate-fade-in">
                 <div className="loading-ring mb-5" />
@@ -221,7 +218,7 @@ export default function App() {
               </div>
             )}
 
-            {/* Error */}
+            {/* Error state */}
             {error && !isLoading && (
               <div className="bubble-card max-w-lg mx-auto p-8 text-center mb-12 animate-bounce-in">
                 <p className="text-4xl mb-3">⛈️</p>
@@ -230,7 +227,7 @@ export default function App() {
               </div>
             )}
 
-            {/* Success — Weather Card */}
+            {/* Weather card */}
             {weather && !isLoading && (
               <div className="max-w-2xl mx-auto mb-16 animate-slide-up">
                 <WeatherCard weather={weather} />
@@ -250,14 +247,13 @@ export default function App() {
             )}
           </div>
 
-          {/* ── Divider ──────────────────────────────────────────────────── */}
           <div className="flex items-center gap-4 mb-10 animate-fade-in" style={{ animationDelay: "0.4s" }}>
             <div className="flex-1 h-px bg-white/25" />
             <span className="text-white/70 font-bold text-sm uppercase tracking-widest">Featured Cities</span>
             <div className="flex-1 h-px bg-white/25" />
           </div>
 
-          {/* ── India Section ─────────────────────────────────────────────── */}
+          {/* India section */}
           <section className="mb-12">
             <h2 className="text-white font-black text-2xl md:text-3xl mb-2 drop-shadow flex items-center gap-2">
               <span>🇮🇳</span> India
@@ -284,7 +280,7 @@ export default function App() {
             )}
           </section>
 
-          {/* ── Global Cities ─────────────────────────────────────────────── */}
+          {/* Global cities section */}
           <section className="mb-16">
             <h2 className="text-white font-black text-2xl md:text-3xl mb-2 drop-shadow flex items-center gap-2">
               <span>🌏</span> Around the World
@@ -311,7 +307,7 @@ export default function App() {
             )}
           </section>
 
-          {/* ── Footer ───────────────────────────────────────────────────── */}
+          {/* Footer */}
           <footer className="text-center pb-8 animate-fade-in" style={{ animationDelay: "0.8s" }}>
             <p className="text-white/50 text-xs">
               Powered by <span className="font-bold text-white/70">OpenWeatherMap</span> · Built with ⚡ &amp; ❤️
