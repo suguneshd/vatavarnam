@@ -1,4 +1,3 @@
-// WeatherCard.jsx — Full weather display with bubbly design
 
 function StatBubble({ icon, label, value }) {
   return (
@@ -13,20 +12,20 @@ function StatBubble({ icon, label, value }) {
 // Map OpenWeatherMap condition main to a bg gradient
 function getConditionGradient(main) {
   const map = {
-    Clear:        "from-amber-300/20 via-sky-200/20 to-sky-300/20",
-    Clouds:       "from-slate-300/20 via-sky-200/20 to-sky-300/20",
-    Rain:         "from-sky-500/20 via-blue-400/20 to-indigo-400/20",
-    Drizzle:      "from-sky-400/20 via-sky-300/20 to-blue-300/20",
+    Clear: "from-amber-300/20 via-sky-200/20 to-sky-300/20",
+    Clouds: "from-slate-300/20 via-sky-200/20 to-sky-300/20",
+    Rain: "from-sky-500/20 via-blue-400/20 to-indigo-400/20",
+    Drizzle: "from-sky-400/20 via-sky-300/20 to-blue-300/20",
     Thunderstorm: "from-violet-500/20 via-blue-500/20 to-sky-400/20",
-    Snow:         "from-slate-100/30 via-sky-100/30 to-white/30",
-    Mist:         "from-slate-300/20 via-slate-200/20 to-sky-200/20",
-    Fog:          "from-slate-300/20 via-slate-200/20 to-sky-200/20",
-    Haze:         "from-amber-200/20 via-yellow-100/20 to-sky-200/20",
-    Smoke:        "from-gray-400/20 via-gray-300/20 to-sky-200/20",
-    Dust:         "from-yellow-300/20 via-amber-200/20 to-sky-200/20",
-    Sand:         "from-yellow-400/20 via-amber-300/20 to-sky-200/20",
-    Squall:       "from-teal-400/20 via-sky-400/20 to-blue-400/20",
-    Tornado:      "from-red-400/20 via-purple-400/20 to-sky-400/20",
+    Snow: "from-slate-100/30 via-sky-100/30 to-white/30",
+    Mist: "from-slate-300/20 via-slate-200/20 to-sky-200/20",
+    Fog: "from-slate-300/20 via-slate-200/20 to-sky-200/20",
+    Haze: "from-amber-200/20 via-yellow-100/20 to-sky-200/20",
+    Smoke: "from-gray-400/20 via-gray-300/20 to-sky-200/20",
+    Dust: "from-yellow-300/20 via-amber-200/20 to-sky-200/20",
+    Sand: "from-yellow-400/20 via-amber-300/20 to-sky-200/20",
+    Squall: "from-teal-400/20 via-sky-400/20 to-blue-400/20",
+    Tornado: "from-red-400/20 via-purple-400/20 to-sky-400/20",
   };
   return map[main] ?? "from-sky-200/20 via-sky-100/20 to-white/20";
 }
@@ -83,22 +82,22 @@ function getSuggestions(weather) {
 }
 
 export default function WeatherCard({ weather }) {
-  const cityName    = weather.name;
-  const country     = weather.sys.country;
-  const temp        = Math.round(weather.main.temp);
-  const feelsLike   = Math.round(weather.main.feels_like);
-  const tempMax     = Math.round(weather.main.temp_max);
-  const tempMin     = Math.round(weather.main.temp_min);
-  const humidity    = weather.main.humidity;
-  const windSpeed   = (weather.wind.speed * 3.6).toFixed(1); // m/s → km/h
-  const visibility  = weather.visibility ? (weather.visibility / 1000).toFixed(1) + " km" : "N/A";
-  const pressure    = weather.main.pressure + " hPa";
+  const cityName = weather.name;
+  const country = weather.sys.country;
+  const temp = Math.round(weather.main.temp);
+  const feelsLike = Math.round(weather.main.feels_like);
+  const tempMax = Math.round(weather.main.temp_max);
+  const tempMin = Math.round(weather.main.temp_min);
+  const humidity = weather.main.humidity;
+  const windSpeed = (weather.wind.speed * 3.6).toFixed(1); // m/s → km/h
+  const visibility = weather.visibility ? (weather.visibility / 1000).toFixed(1) + " km" : "N/A";
+  const pressure = weather.main.pressure + " hPa";
   const description = weather.weather[0].description;
-  const mainCond    = weather.weather[0].main;
-  const iconCode    = weather.weather[0].icon;
-  const iconUrl     = `https://openweathermap.org/img/wn/${iconCode}@4x.png`;
-  const gradient    = getConditionGradient(mainCond);
-  const emoji       = conditionEmoji(mainCond);
+  const mainCond = weather.weather[0].main;
+  const iconCode = weather.weather[0].icon;
+  const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@4x.png`;
+  const gradient = getConditionGradient(mainCond);
+  const emoji = conditionEmoji(mainCond);
 
   // Time of last update
   const updatedAt = new Date(weather.dt * 1000).toLocaleTimeString("en-IN", {
@@ -141,10 +140,10 @@ export default function WeatherCard({ weather }) {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
-        <StatBubble icon="🌡️" label="Feels Like"  value={`${feelsLike}°C`}  />
-        <StatBubble icon="💧" label="Humidity"    value={`${humidity}%`}    />
-        <StatBubble icon="💨" label="Wind"        value={`${windSpeed} km/h`} />
-        <StatBubble icon="👁️" label="Visibility" value={visibility}         />
+        <StatBubble icon="🌡️" label="Feels Like" value={`${feelsLike}°C`} />
+        <StatBubble icon="💧" label="Humidity" value={`${humidity}%`} />
+        <StatBubble icon="💨" label="Wind" value={`${windSpeed} km/h`} />
+        <StatBubble icon="👁️" label="Visibility" value={visibility} />
       </div>
 
       {/* Smart Suggestions */}

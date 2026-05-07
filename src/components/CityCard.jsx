@@ -1,4 +1,3 @@
-// CityCard.jsx — Clickable city bubble showing live weather
 
 const conditionEmoji = {
   Clear: "☀️", Clouds: "☁️", Rain: "🌧️", Drizzle: "🌦️",
@@ -9,13 +8,13 @@ const conditionEmoji = {
 
 export default function CityCard({ city, weatherData, onClick, delay = 0 }) {
   const hasData = !!weatherData;
-  const temp        = hasData ? Math.round(weatherData.main.temp)        : null;
-  const feelsLike   = hasData ? Math.round(weatherData.main.feels_like)  : null;
-  const humidity    = hasData ? weatherData.main.humidity                 : null;
-  const desc        = hasData ? weatherData.weather[0].description        : null;
-  const mainCond    = hasData ? weatherData.weather[0].main               : null;
-  const iconCode    = hasData ? weatherData.weather[0].icon               : null;
-  const emoji       = mainCond ? (conditionEmoji[mainCond] ?? "🌡️")      : "⏳";
+  const temp = hasData ? Math.round(weatherData.main.temp) : null;
+  const feelsLike = hasData ? Math.round(weatherData.main.feels_like) : null;
+  const humidity = hasData ? weatherData.main.humidity : null;
+  const desc = hasData ? weatherData.weather[0].description : null;
+  const mainCond = hasData ? weatherData.weather[0].main : null;
+  const iconCode = hasData ? weatherData.weather[0].icon : null;
+  const emoji = mainCond ? (conditionEmoji[mainCond] ?? "🌡️") : "⏳";
 
   return (
     <div

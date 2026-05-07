@@ -1,13 +1,12 @@
-// ForecastItem.jsx — One forecast day bubble
 
 export default function ForecastItem({ item, delay = 0 }) {
   const dayName = new Date(item.dt * 1000).toLocaleDateString("en-IN", {
     weekday: "short",
   });
-  const icon        = item.weather[0].icon;
+  const icon = item.weather[0].icon;
   const description = item.weather[0].description;
-  const high        = Math.round(item.main.temp_max);
-  const low         = Math.round(item.main.temp_min);
+  const high = Math.round(item.main.temp_max);
+  const low = Math.round(item.main.temp_min);
 
   return (
     <div
