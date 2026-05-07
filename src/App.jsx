@@ -7,7 +7,6 @@ import CityCard from "./components/CityCard";
 const API_KEY  = "b6981ddb459abfa25f8eb8be571a1db1";
 const API_BASE = "https://api.openweathermap.org/data/2.5";
 
-// Default cities: 10 Indian + 5 global
 const DEFAULT_CITIES = [
   { name: "Mumbai",    country: "IN", flag: "🇮🇳", desc: "The city of dreams, monsoon capital" },
   { name: "Delhi",     country: "IN", flag: "🇮🇳", desc: "India's scorching capital city" },
@@ -26,8 +25,7 @@ const DEFAULT_CITIES = [
   { name: "Sydney",    country: "AU", flag: "🇦🇺", desc: "Harbour city down under" },
 ];
 
-// Animated floating cloud background
-function Clouds() {
+//Back-Ground Animation
   const clouds = [
     { w: 180, h: 60,  top: "8%",  delay: "0s",  dur: "28s",  blur: 3 },
     { w: 260, h: 80,  top: "18%", delay: "6s",  dur: "40s",  blur: 4 },
@@ -58,29 +56,7 @@ function Clouds() {
   );
 }
 
-export default function App() {
-  // Custom cursor
-  const cursorRef    = useRef(null);
-  const [clicking, setClicking] = useState(false);
 
-  useEffect(() => {
-    const move = (e) => {
-      if (cursorRef.current) {
-        cursorRef.current.style.left = e.clientX + "px";
-        cursorRef.current.style.top  = e.clientY + "px";
-      }
-    };
-    const down = () => setClicking(true);
-    const up   = () => setClicking(false);
-    window.addEventListener("mousemove", move);
-    window.addEventListener("mousedown", down);
-    window.addEventListener("mouseup",   up);
-    return () => {
-      window.removeEventListener("mousemove", move);
-      window.removeEventListener("mousedown", down);
-      window.removeEventListener("mouseup",   up);
-    };
-  }, []);
 
   // State
   const [cityInput,   setCityInput]   = useState("");
