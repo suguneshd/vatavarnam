@@ -187,7 +187,7 @@ export default function App() {
             <div className="inline-flex items-center gap-3 mb-4">
               <span className="text-5xl md:text-6xl animate-float-slow">☁️</span>
               <h1 className="font-display text-5xl md:text-7xl font-black text-white drop-shadow-lg tracking-tight">
-                VATAVARNAM
+                Vatavarnam
               </h1>
               <span className="text-5xl md:text-6xl animate-float-medium" style={{ animationDelay: "1s" }}>🌤️</span>
             </div>
