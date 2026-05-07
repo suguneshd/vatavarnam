@@ -81,7 +81,7 @@ function getSuggestions(weather) {
   return suggestions.slice(0, 4);
 }
 
-export default function WeatherCard({ weather }) {
+export default function WeatherCard({ weather, isFavorite, onToggleFavorite }) {
   const cityName = weather.name;
   const country = weather.sys.country;
   const temp = Math.round(weather.main.temp);
@@ -111,9 +111,16 @@ export default function WeatherCard({ weather }) {
       {/* Top Row */}
       <div className="flex justify-between items-start mb-2">
         <div>
-          <h2 className="text-sky-900 font-black text-3xl md:text-4xl leading-tight">
+          <h2 className="text-sky-900 font-black text-3xl md:text-4xl leading-tight flex items-center gap-2">
             {cityName}
-            <span className="text-sky-600 font-semibold text-lg ml-2">{country}</span>
+            <span className="text-sky-600 font-semibold text-lg">{country}</span>
+            <button 
+              onClick={() => onToggleFavorite?.(cityName)} 
+              className="text-3xl hover:scale-110 active:scale-95 transition-transform drop-shadow-md ml-2"
+              title={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+            >
+              {isFavorite ? '⭐' : '☆'}
+            </button>
           </h2>
           <p className="text-sky-700 capitalize font-semibold text-base mt-0.5">
             {emoji} {description}

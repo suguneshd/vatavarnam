@@ -92,20 +92,46 @@ export default function App() {
   const [cityWeather, setCityWeather] = useState({});
   const [loadingCities, setLoadingCities] = useState(true);
 
-  // Fetch all default city weather on mount
+  // Features State
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
+  const [favorites, setFavorites] = useState(() => {
+    const saved = localStorage.getItem('favorites');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [alertMessage, setAlertMessage] = useState("");
+
+  useEffect(() => {
+    if (darkMode) document.documentElement.classList.add('dark');
+    else document.documentElement.classList.remove('dark');
+    localStorage.setItem('darkMode', darkMode);
+  }, [darkMode]);
+
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }, [favorites]);
+
+  const toggleFavorite = useCallback((cityName) => {
+    setFavorites(prev => prev.includes(cityName) ? prev.filter(c => c !== cityName) : [...prev, cityName]);
+  }, []);
+
+  // Fetch all default & favorite city weather on mount
   useEffect(() => {
     async function fetchAllCities() {
       setLoadingCities(true);
       const results = {};
+      const uniqueCities = Array.from(new Set([...DEFAULT_CITIES.map(c => c.name), ...favorites]));
+      
       await Promise.allSettled(
-        DEFAULT_CITIES.map(async (c) => {
+        uniqueCities.map(async (cName) => {
           try {
+            const defaultCity = DEFAULT_CITIES.find(c => c.name === cName);
+            const query = defaultCity ? `${cName},${defaultCity.country}` : cName;
             const res = await fetch(
-              `${API_BASE}/weather?q=${encodeURIComponent(c.name)},${c.country}&appid=${API_KEY}&units=metric`
+              `${API_BASE}/weather?q=${encodeURIComponent(query)}&appid=${API_KEY}&units=metric`
             );
             if (res.ok) {
               const data = await res.json();
-              results[c.name] = data;
+              results[cName] = data;
             }
           } catch (_) { }
         })
@@ -114,6 +140,7 @@ export default function App() {
       setLoadingCities(false);
     }
     fetchAllCities();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Fetch weather for searched city
@@ -139,6 +166,17 @@ export default function App() {
         const weatherData = await weatherRes.json();
         const forecastData = await forecastRes.json();
         setWeather(weatherData);
+        
+        // Cache the result so it shows instantly in favorites
+        setCityWeather(prev => ({ ...prev, [weatherData.name]: weatherData }));
+
+        // Extreme weather alert check
+        const mainCond = weatherData.weather[0].main;
+        const temp = weatherData.main.temp;
+        if (['Thunderstorm', 'Tornado', 'Squall'].includes(mainCond) || temp > 45 || temp < 0) {
+          setAlertMessage(`EXTREME WEATHER ALERT: ${mainCond} conditions with ${Math.round(temp)}°C in ${weatherData.name}. Please stay safe!`);
+        }
+
         setForecast(
           forecastData.list.filter((_, i) => i % 8 === 0).slice(0, 5)
         );
@@ -167,6 +205,23 @@ export default function App() {
 
   return (
     <>
+      {/* Alert Modal */}
+      {alertMessage && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-fade-in">
+          <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl max-w-md text-center shadow-2xl animate-bounce-in border-4 border-red-500 relative">
+            <div className="text-5xl mb-4">⚠️</div>
+            <h3 className="text-red-600 font-black text-2xl mb-2">Weather Alert</h3>
+            <p className="text-slate-800 dark:text-white font-bold text-lg mb-6">{alertMessage}</p>
+            <button 
+              onClick={() => setAlertMessage("")}
+              className="px-8 py-3 bg-red-500 hover:bg-red-600 text-white font-black rounded-xl transition-colors shadow-lg shadow-red-500/30 active:scale-95"
+            >
+              I Understand
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Cursor */}
       <div
         ref={cursorRef}
@@ -183,11 +238,20 @@ export default function App() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 py-8 md:py-14">
 
           {/* Header */}
+          <div className="absolute top-4 right-4 md:top-8 md:right-8 z-50">
+            <button 
+              onClick={() => setDarkMode(!darkMode)}
+              className="w-12 h-12 rounded-full bubble-card flex items-center justify-center text-2xl hover:scale-110 active:scale-95 transition-all shadow-lg"
+              title="Toggle Dark Mode"
+            >
+              {darkMode ? "🌙" : "☀️"}
+            </button>
+          </div>
           <header className="text-center mb-12 animate-fade-in">
             <div className="inline-flex items-center gap-3 mb-4">
               <span className="text-5xl md:text-6xl animate-float-slow">☁️</span>
               <h1 className="font-display text-5xl md:text-7xl font-black text-white drop-shadow-lg tracking-tight">
-                vatavarnam
+                వాతావరణం
               </h1>
               <span className="text-5xl md:text-6xl animate-float-medium" style={{ animationDelay: "1s" }}>🌤️</span>
             </div>
@@ -230,7 +294,11 @@ export default function App() {
             {/* Weather card */}
             {weather && !isLoading && (
               <div className="max-w-2xl mx-auto mb-16 animate-slide-up">
-                <WeatherCard weather={weather} />
+                <WeatherCard 
+                  weather={weather} 
+                  isFavorite={favorites.includes(weather.name)}
+                  onToggleFavorite={toggleFavorite}
+                />
                 {forecast.length > 0 && (
                   <section className="mt-6">
                     <h2 className="text-white text-xs font-black uppercase tracking-widest mb-4 opacity-80 text-center">
@@ -252,6 +320,30 @@ export default function App() {
             <span className="text-white/70 font-bold text-sm uppercase tracking-widest">Featured Cities</span>
             <div className="flex-1 h-px bg-white/25" />
           </div>
+
+          {/* Favorites section */}
+          {favorites.length > 0 && (
+            <section className="mb-12">
+              <h2 className="text-white font-black text-2xl md:text-3xl mb-4 drop-shadow flex items-center gap-2">
+                <span>⭐</span> My Favorites
+              </h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                {favorites.map((cityName, i) => {
+                  const cityData = DEFAULT_CITIES.find(c => c.name === cityName) || { name: cityName, flag: "📍", desc: "Saved favorite" };
+                  return (
+                    <CityCard
+                      key={cityName}
+                      city={cityData}
+                      weatherData={cityWeather[cityName]}
+                      onClick={() => handleCityClick(cityName)}
+                      delay={i * 0.05}
+                      staggerClass={`stagger-1`}
+                    />
+                  );
+                })}
+              </div>
+            </section>
+          )}
 
           {/* India section */}
           <section className="mb-12">

@@ -1,5 +1,5 @@
 /* ── Google Fonts ─────────────────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Outfit:wght@200;300;400;500;600;700&family=Poppins:wght@400;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -247,3 +247,26 @@ h1 {
 .stagger-13 { animation-delay: 0.65s; }
 .stagger-14 { animation-delay: 0.7s; }
 .stagger-15 { animation-delay: 0.75s; }
+
+/* ── Dark Mode Overrides ───────────────────────────────────────────────────── */
+html.dark .sky-bg {
+  background: linear-gradient(160deg, #0a0f1c 0%, #111827 20%, #1f2937 50%, #0a0f1c 100%);
+}
+html.dark .bubble-card,
+html.dark .mini-bubble,
+html.dark .city-card {
+  background: linear-gradient(135deg, rgba(30,41,59,0.7) 0%, rgba(15,23,42,0.5) 100%) !important;
+  border-color: rgba(255,255,255,0.1) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+}
+html.dark .text-sky-900 { color: #f8fafc !important; }
+html.dark .text-sky-800 { color: #e2e8f0 !important; }
+html.dark .text-sky-700 { color: #cbd5e1 !important; }
+html.dark .text-sky-600 { color: #94a3b8 !important; }
+html.dark .text-sky-500 { color: #64748b !important; }
+html.dark .bg-white\/40 { background-color: rgba(255,255,255,0.05) !important; }
+html.dark .hover\:bg-white\/60:hover { background-color: rgba(255,255,255,0.1) !important; }
+html.dark input { color: #f8fafc !important; }
+html.dark input::placeholder { color: #64748b !important; }
+html.dark .bg-white\/95 { background-color: rgba(15,23,42,0.95) !important; border-color: rgba(255,255,255,0.1) !important; }
+html.dark .hover\:bg-sky-100\/70:hover { background-color: rgba(255,255,255,0.1) !important; }
