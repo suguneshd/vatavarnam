@@ -1,16 +1,28 @@
-# React + Vite
+# Vatavarnam
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Vatavarnam is a smart weather web app that provides real-time weather data along with useful suggestions based on current conditions. Users can search any city to view temperature, humidity, and forecasts, while the app analyzes the data to offer practical advice like avoiding extreme heat or carrying an umbrella. It is built using React and Tailwind CSS, focusing on dynamic UI, API integration, and user-friendly design.
 
-Currently, two official plugins are available:
+# Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+* 🔍 Search weather by city
+* 🌡️ Real-time temperature, humidity, and wind data
+* 📅 5 days Weather forecast display
+* ⚠️ Smart suggestions (e.g., carry umbrella, avoid heat)
+* 🎨 Responsive UI using Tailwind CSS
+* 🔄 Dynamic updates using React Hooks
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# Tech Stack
 
-## Expanding the ESLint configuration
+* Frontend: React
+* Styling: Tailwind CSS
+* State Management: useState
+* Side Effects: useEffect
+* API: Weather API (e.g., OpenWeatherMap)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Objective
+
+The goal of Vatavarnam is to transform weather data into meaningful insights using modern frontend technologies like React, making it both informative and practical.
+
+# Members
+Rusheel Chandra Nirmala, Sharath Chandra Reddy Maryada, Sugunesh Dande
