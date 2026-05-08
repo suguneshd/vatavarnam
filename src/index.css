@@ -1,3 +1,4 @@
+/* ── Google Fonts ─────────────────────────────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Outfit:wght@200;300;400;500;600;700&family=Poppins:wght@400;600;700;800;900&display=swap');
 
 @tailwind base;
@@ -8,10 +9,12 @@
   box-sizing: border-box;
 }
 
+/* ── Smooth Scroll ─────────────────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
 }
 
+/* ── Body / Root ───────────────────────────────────────────────────────────── */
 body {
   margin: 0;
   font-family: 'Nunito', sans-serif;
@@ -25,10 +28,12 @@ body {
   min-height: 100svh;
 }
 
+/* ── Telugu Title Font ─────────────────────────────────────────────────────── */
 h1 {
   font-family: 'Noto Sans Telugu', 'Poppins', sans-serif;
 }
 
+/* ── Animated Sky Background ───────────────────────────────────────────────── */
 .sky-bg {
   background: linear-gradient(
     160deg,
@@ -53,6 +58,7 @@ h1 {
   z-index: 0;
 }
 
+/* ── Floating Clouds ───────────────────────────────────────────────────────── */
 .cloud {
   position: fixed;
   pointer-events: none;
@@ -69,6 +75,7 @@ h1 {
   to   { transform: translateX(calc(100vw + 200px)); }
 }
 
+/* ── Glass Bubble Card ─────────────────────────────────────────────────────── */
 .bubble-card {
   background: linear-gradient(
     135deg,
@@ -112,6 +119,7 @@ h1 {
   border-color: rgba(255,255,255,0.85);
 }
 
+/* ── Mini Bubble Card (stat / forecast) ────────────────────────────────────── */
 .mini-bubble {
   background: linear-gradient(
     135deg,
@@ -147,6 +155,7 @@ h1 {
     inset 0 1px 0 rgba(255,255,255,0.75);
 }
 
+/* ── Search Bar Glow ───────────────────────────────────────────────────────── */
 .search-glow {
   transition: all 0.3s ease;
 }
@@ -158,6 +167,7 @@ h1 {
     0 0 30px rgba(90,180,245,0.3);
 }
 
+/* ── City Grid Card ────────────────────────────────────────────────────────── */
 .city-card {
   background: linear-gradient(
     135deg,
@@ -196,6 +206,7 @@ h1 {
   border-color: rgba(255,255,255,0.9);
 }
 
+/* ── Loading Spinner ───────────────────────────────────────────────────────── */
 .loading-ring {
   width: 64px;
   height: 64px;
@@ -205,6 +216,7 @@ h1 {
   animation: spin 0.9s linear infinite;
 }
 
+/* ── Scrollbar ─────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -219,6 +231,7 @@ h1 {
   background: rgba(90,180,245,0.75);
 }
 
+/* ── Stagger Delay Helpers ─────────────────────────────────────────────────── */
 .stagger-1 { animation-delay: 0.05s; }
 .stagger-2 { animation-delay: 0.1s; }
 .stagger-3 { animation-delay: 0.15s; }
@@ -235,6 +248,7 @@ h1 {
 .stagger-14 { animation-delay: 0.7s; }
 .stagger-15 { animation-delay: 0.75s; }
 
+/* ── Dark Mode Overrides ───────────────────────────────────────────────────── */
 html.dark .sky-bg {
   background: linear-gradient(160deg, #0a0f1c 0%, #111827 20%, #1f2937 50%, #0a0f1c 100%);
 }

@@ -9,6 +9,7 @@ function StatBubble({ icon, label, value }) {
   );
 }
 
+// Map OpenWeatherMap condition main to a bg gradient
 function getConditionGradient(main) {
   const map = {
     Clear: "from-amber-300/20 via-sky-200/20 to-sky-300/20",
@@ -29,6 +30,7 @@ function getConditionGradient(main) {
   return map[main] ?? "from-sky-200/20 via-sky-100/20 to-white/20";
 }
 
+// Condition emoji
 function conditionEmoji(main) {
   const map = {
     Clear: "☀️", Clouds: "☁️", Rain: "🌧️", Drizzle: "🌦️",
@@ -39,12 +41,13 @@ function conditionEmoji(main) {
   return map[main] ?? "🌡️";
 }
 
+// Generate smart suggestions based on weather conditions
 function getSuggestions(weather) {
   const temp = weather.main.temp;
   const mainCond = weather.weather[0].main;
   const suggestions = [];
 
-  
+  // Temperature based
   if (temp > 30) {
     suggestions.push({ icon: "👕", text: "Wear light, breathable cotton clothes." });
     suggestions.push({ icon: "💧", text: "Drink plenty of water to stay hydrated." });
@@ -56,7 +59,7 @@ function getSuggestions(weather) {
     suggestions.push({ icon: "👕", text: "Comfortable weather, wear casual clothes." });
   }
 
-  
+  // Condition based
   if (["Rain", "Drizzle", "Thunderstorm"].includes(mainCond)) {
     suggestions.push({ icon: "☂️", text: "Carry an umbrella or raincoat." });
     suggestions.push({ icon: "🚗", text: "Roads might be slippery, travel safely." });
@@ -74,7 +77,7 @@ function getSuggestions(weather) {
     suggestions.push({ icon: "🚗", text: "Low visibility, drive with caution." });
   }
 
-  
+  // Remove duplicates and limit to 4 suggestions
   return suggestions.slice(0, 4);
 }
 
@@ -86,7 +89,7 @@ export default function WeatherCard({ weather, isFavorite, onToggleFavorite }) {
   const tempMax = Math.round(weather.main.temp_max);
   const tempMin = Math.round(weather.main.temp_min);
   const humidity = weather.main.humidity;
-  const windSpeed = (weather.wind.speed * 3.6).toFixed(1); 
+  const windSpeed = (weather.wind.speed * 3.6).toFixed(1); // m/s → km/h
   const visibility = weather.visibility ? (weather.visibility / 1000).toFixed(1) + " km" : "N/A";
   const pressure = weather.main.pressure + " hPa";
   const description = weather.weather[0].description;
@@ -96,7 +99,7 @@ export default function WeatherCard({ weather, isFavorite, onToggleFavorite }) {
   const gradient = getConditionGradient(mainCond);
   const emoji = conditionEmoji(mainCond);
 
-  
+  // Time of last update
   const updatedAt = new Date(weather.dt * 1000).toLocaleTimeString("en-IN", {
     hour: "2-digit", minute: "2-digit",
   });
@@ -105,7 +108,8 @@ export default function WeatherCard({ weather, isFavorite, onToggleFavorite }) {
 
   return (
     <div className={`bubble-card bg-gradient-to-br ${gradient} p-6 md:p-8 animate-slide-up`}>
-            <div className="flex justify-between items-start mb-2">
+      {/* Top Row */}
+      <div className="flex justify-between items-start mb-2">
         <div>
           <h2 className="text-sky-900 font-black text-3xl md:text-4xl leading-tight flex items-center gap-2">
             {cityName}
@@ -130,7 +134,8 @@ export default function WeatherCard({ weather, isFavorite, onToggleFavorite }) {
         />
       </div>
 
-            <div className="flex items-end gap-4 my-4">
+      {/* Temperature */}
+      <div className="flex items-end gap-4 my-4">
         <div className="text-sky-900 font-black leading-none" style={{ fontSize: "clamp(4rem,10vw,6rem)" }}>
           {temp}<span className="text-3xl font-light align-top mt-3 inline-block">°C</span>
         </div>
@@ -140,14 +145,16 @@ export default function WeatherCard({ weather, isFavorite, onToggleFavorite }) {
         </div>
       </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+      {/* Stats Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
         <StatBubble icon="🌡️" label="Feels Like" value={`${feelsLike}°C`} />
         <StatBubble icon="💧" label="Humidity" value={`${humidity}%`} />
         <StatBubble icon="💨" label="Wind" value={`${windSpeed} km/h`} />
         <StatBubble icon="👁️" label="Visibility" value={visibility} />
       </div>
 
-            {suggestions.length > 0 && (
+      {/* Smart Suggestions */}
+      {suggestions.length > 0 && (
         <div className="mt-6 pt-5 border-t border-sky-300/30">
           <h3 className="text-sky-800 font-bold text-sm uppercase tracking-wide mb-3 flex items-center gap-2">
             <span className="text-lg">💡</span> Smart Suggestions

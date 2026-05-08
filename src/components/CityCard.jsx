@@ -26,13 +26,15 @@ export default function CityCard({ city, weatherData, onClick, delay = 0 }) {
       onKeyDown={(e) => e.key === "Enter" && onClick()}
       title={`View weather for ${city.name}`}
     >
-            <div className="mb-2">
+      {/* Flag + Name */}
+      <div className="mb-2">
         <span className="text-3xl">{city.flag}</span>
       </div>
       <h3 className="text-sky-900 font-black text-sm leading-tight">{city.name}</h3>
       <p className="text-sky-500 text-xs mt-0.5 leading-snug opacity-80 line-clamp-2">{city.desc}</p>
 
-            {hasData ? (
+      {/* Weather data */}
+      {hasData ? (
         <>
           <img
             src={`https://openweathermap.org/img/wn/${iconCode}@2x.png`}
@@ -57,7 +59,8 @@ export default function CityCard({ city, weatherData, onClick, delay = 0 }) {
         </div>
       )}
 
-            <div className="mt-3 text-sky-400 text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      {/* Click hint */}
+      <div className="mt-3 text-sky-400 text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         Tap for details →
       </div>
     </div>

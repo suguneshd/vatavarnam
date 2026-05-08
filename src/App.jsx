@@ -7,6 +7,7 @@ import CityCard from "./components/CityCard";
 const API_KEY = "b6981ddb459abfa25f8eb8be571a1db1";
 const API_BASE = "https://api.openweathermap.org/data/2.5";
 
+// Default cities: 10 Indian + 5 global
 const DEFAULT_CITIES = [
   { name: "Mumbai", country: "IN", flag: "🇮🇳", desc: "The city of dreams, monsoon capital" },
   { name: "Delhi", country: "IN", flag: "🇮🇳", desc: "India's scorching capital city" },
@@ -25,6 +26,7 @@ const DEFAULT_CITIES = [
   { name: "Sydney", country: "AU", flag: "🇦🇺", desc: "Harbour city down under" },
 ];
 
+// Animated floating cloud background
 function Clouds() {
   const clouds = [
     { w: 180, h: 60, top: "8%", delay: "0s", dur: "28s", blur: 3 },
@@ -57,7 +59,7 @@ function Clouds() {
 }
 
 export default function App() {
-  
+  // Custom cursor
   const cursorRef = useRef(null);
   const [clicking, setClicking] = useState(false);
 
@@ -80,7 +82,7 @@ export default function App() {
     };
   }, []);
 
-  
+  // State
   const [cityInput, setCityInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [weather, setWeather] = useState(null);
@@ -90,7 +92,7 @@ export default function App() {
   const [cityWeather, setCityWeather] = useState({});
   const [loadingCities, setLoadingCities] = useState(true);
 
-  
+  // Features State
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
   const [favorites, setFavorites] = useState(() => {
     const saved = localStorage.getItem('favorites');
@@ -112,7 +114,7 @@ export default function App() {
     setFavorites(prev => prev.includes(cityName) ? prev.filter(c => c !== cityName) : [...prev, cityName]);
   }, []);
 
-  
+  // Fetch all default & favorite city weather on mount
   useEffect(() => {
     async function fetchAllCities() {
       setLoadingCities(true);
@@ -138,10 +140,10 @@ export default function App() {
       setLoadingCities(false);
     }
     fetchAllCities();
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  
+  // Fetch weather for searched city
   useEffect(() => {
     if (!searchQuery) return;
     async function fetchWeather() {
@@ -165,10 +167,10 @@ export default function App() {
         const forecastData = await forecastRes.json();
         setWeather(weatherData);
         
-        
+        // Cache the result so it shows instantly in favorites
         setCityWeather(prev => ({ ...prev, [weatherData.name]: weatherData }));
 
-        
+        // Extreme weather alert check
         const mainCond = weatherData.weather[0].main;
         const temp = weatherData.main.temp;
         if (['Thunderstorm', 'Tornado', 'Squall'].includes(mainCond) || temp > 45 || temp < 0) {
@@ -203,7 +205,8 @@ export default function App() {
 
   return (
     <>
-            {alertMessage && (
+      {/* Alert Modal */}
+      {alertMessage && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-fade-in">
           <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl max-w-md text-center shadow-2xl animate-bounce-in border-4 border-red-500 relative">
             <div className="text-5xl mb-4">⚠️</div>
@@ -219,7 +222,8 @@ export default function App() {
         </div>
       )}
 
-            <div
+      {/* Cursor */}
+      <div
         ref={cursorRef}
         className={`cursor-bolt ${clicking ? "clicking" : ""}`}
         aria-hidden="true"
@@ -227,12 +231,14 @@ export default function App() {
         ⚡
       </div>
 
-            <div className="sky-bg font-sans">
+      {/* Sky background */}
+      <div className="sky-bg font-sans">
         <Clouds />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 py-8 md:py-14">
 
-                    <div className="absolute top-4 right-4 md:top-8 md:right-8 z-50">
+          {/* Header */}
+          <div className="absolute top-4 right-4 md:top-8 md:right-8 z-50">
             <button 
               onClick={() => setDarkMode(!darkMode)}
               className="w-12 h-12 rounded-full bubble-card flex items-center justify-center text-2xl hover:scale-110 active:scale-95 transition-all shadow-lg"
@@ -257,7 +263,8 @@ export default function App() {
             </p>
           </header>
 
-                    <section id="search" className="relative z-50 flex justify-center mb-16 animate-slide-up" style={{ animationDelay: "0.2s" }}>
+          {/* Search */}
+          <section id="search" className="relative z-50 flex justify-center mb-16 animate-slide-up" style={{ animationDelay: "0.2s" }}>
             <SearchBar
               value={cityInput}
               onChange={(e) => setCityInput(e.target.value)}
@@ -265,15 +272,18 @@ export default function App() {
             />
           </section>
 
-                    <div id="weather-result">
-                        {isLoading && (
+          {/* Weather result */}
+          <div id="weather-result">
+            {/* Loading state */}
+            {isLoading && (
               <div className="flex flex-col items-center justify-center py-16 animate-fade-in">
                 <div className="loading-ring mb-5" />
                 <p className="text-white text-xl font-bold drop-shadow">Fetching weather data…</p>
               </div>
             )}
 
-                        {error && !isLoading && (
+            {/* Error state */}
+            {error && !isLoading && (
               <div className="bubble-card max-w-lg mx-auto p-8 text-center mb-12 animate-bounce-in">
                 <p className="text-4xl mb-3">⛈️</p>
                 <p className="text-sky-900 font-bold text-lg">{error}</p>
@@ -281,7 +291,8 @@ export default function App() {
               </div>
             )}
 
-                        {weather && !isLoading && (
+            {/* Weather card */}
+            {weather && !isLoading && (
               <div className="max-w-2xl mx-auto mb-16 animate-slide-up">
                 <WeatherCard 
                   weather={weather} 
@@ -310,7 +321,8 @@ export default function App() {
             <div className="flex-1 h-px bg-white/25" />
           </div>
 
-                    {favorites.length > 0 && (
+          {/* Favorites section */}
+          {favorites.length > 0 && (
             <section className="mb-12">
               <h2 className="text-white font-black text-2xl md:text-3xl mb-4 drop-shadow flex items-center gap-2">
                 <span>⭐</span> My Favorites
@@ -333,7 +345,8 @@ export default function App() {
             </section>
           )}
 
-                    <section className="mb-12">
+          {/* India section */}
+          <section className="mb-12">
             <h2 className="text-white font-black text-2xl md:text-3xl mb-2 drop-shadow flex items-center gap-2">
               <span>🇮🇳</span> India
             </h2>
@@ -359,7 +372,8 @@ export default function App() {
             )}
           </section>
 
-                    <section className="mb-16">
+          {/* Global cities section */}
+          <section className="mb-16">
             <h2 className="text-white font-black text-2xl md:text-3xl mb-2 drop-shadow flex items-center gap-2">
               <span>🌏</span> Around the World
             </h2>
@@ -385,7 +399,8 @@ export default function App() {
             )}
           </section>
 
-                    <footer className="text-center pb-8 animate-fade-in" style={{ animationDelay: "0.8s" }}>
+          {/* Footer */}
+          <footer className="text-center pb-8 animate-fade-in" style={{ animationDelay: "0.8s" }}>
             <p className="text-white/50 text-xs">
               Powered by <span className="font-bold text-white/70">OpenWeatherMap</span> · Built with ⚡ &amp; ❤️
             </p>

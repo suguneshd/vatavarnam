@@ -36,9 +36,9 @@ export default function SearchBar({ value, onChange, onSearch }) {
     const trimmed = searchVal.trim();
     
     if (trimmed) {
-      
+      // Remove duplicate from history if it exists, then add to front
       let updatedSearches = [trimmed, ...recentSearches.filter(c => c.toLowerCase() !== trimmed.toLowerCase())];
-      
+      // Keep only 5
       updatedSearches = updatedSearches.slice(0, 5);
       
       setRecentSearches(updatedSearches);
@@ -69,7 +69,8 @@ export default function SearchBar({ value, onChange, onSearch }) {
   return (
     <div className="w-full max-w-2xl px-4 relative" ref={wrapperRef}>
       <div className={`bubble-card p-3 flex gap-3 items-center transition-all duration-300 ${isFocused ? 'ring-4 ring-sky-400/50 shadow-sky-500/30' : 'animate-pulse-glow'}`}>
-                <span className="text-2xl pl-2 opacity-70 select-none">🔍</span>
+        {/* Search icon */}
+        <span className="text-2xl pl-2 opacity-70 select-none">🔍</span>
 
         <input
           type="text"
