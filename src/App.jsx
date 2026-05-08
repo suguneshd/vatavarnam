@@ -222,15 +222,6 @@ export default function App() {
         </div>
       )}
 
-      {/* Cursor */}
-      <div
-        ref={cursorRef}
-        className={`cursor-bolt ${clicking ? "clicking" : ""}`}
-        aria-hidden="true"
-      >
-        ⚡
-      </div>
-
       {/* Sky background */}
       <div className="sky-bg font-sans">
         <Clouds />
