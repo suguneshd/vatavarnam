@@ -1,8 +1,4 @@
-// theme.js
-// Handles picking the right colors based on the weather condition.
-// Keeping this in a separate file makes App.jsx much easier to read.
 
-// Step 1: Figure out which theme name to use
 export function getThemeName(condition = "") {
   const c = condition.toLowerCase();
 
@@ -14,8 +10,6 @@ export function getThemeName(condition = "") {
   return "default";
 }
 
-// Step 2: Map each theme name to its Tailwind classes
-// Each theme has: bg (background gradient), card, text, subtext, badge, button colors
 const themes = {
   sunny: {
     bg: "from-amber-400 via-orange-300 to-yellow-200",
@@ -59,7 +53,6 @@ const themes = {
   },
 };
 
-// Step 3: Export a single function to get the theme classes by name
 export function getTheme(condition) {
   const name = getThemeName(condition);
   return themes[name];

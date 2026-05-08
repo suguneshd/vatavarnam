@@ -12,17 +12,17 @@ export default function SearchBar({ value, onChange, onSearch }) {
   const [focused, setFocused] = useState(false);
   const [recent, setRecent] = useState([]);
 
-  // Load recent searches
+  
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("recent")) || [];
     setRecent(data);
   }, []);
 
-  // Search function
+  
   function handleSearch(city = value) {
     if (!city.trim()) return;
 
-    // Update recent searches
+    
     const updated = [
       city,
       ...recent.filter((c) => c.toLowerCase() !== city.toLowerCase()),
@@ -35,15 +35,14 @@ export default function SearchBar({ value, onChange, onSearch }) {
     setFocused(false);
   }
 
-  // Suggestions
+  
   const suggestions = cities.filter((city) =>
     city.toLowerCase().includes(value.toLowerCase())
   );
 
   return (
     <div className="w-full max-w-xl mx-auto relative">
-      {/* Search Box */}
-      <div className="flex gap-2 bg-white p-3 rounded-xl shadow">
+            <div className="flex gap-2 bg-white p-3 rounded-xl shadow">
         <input
           type="text"
           value={value}
@@ -62,12 +61,10 @@ export default function SearchBar({ value, onChange, onSearch }) {
         </button>
       </div>
 
-      {/* Dropdown */}
-      {focused && (
+            {focused && (
         <div className="absolute w-full bg-white shadow rounded-xl mt-2 p-2">
           
-          {/* Recent Searches */}
-          {!value && recent.length > 0 && (
+                    {!value && recent.length > 0 && (
             <>
               <p className="text-sm font-bold mb-2">Recent</p>
 
@@ -83,8 +80,7 @@ export default function SearchBar({ value, onChange, onSearch }) {
             </>
           )}
 
-          {/* Suggestions */}
-          {value && (
+                    {value && (
             <>
               <p className="text-sm font-bold mb-2">Suggestions</p>
 
