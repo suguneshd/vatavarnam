@@ -60,27 +60,7 @@ function Clouds() {
 
 export default function App() {
   // Custom cursor
-  const cursorRef = useRef(null);
-  const [clicking, setClicking] = useState(false);
-
-  useEffect(() => {
-    const move = (e) => {
-      if (cursorRef.current) {
-        cursorRef.current.style.left = e.clientX + "px";
-        cursorRef.current.style.top = e.clientY + "px";
-      }
-    };
-    const down = () => setClicking(true);
-    const up = () => setClicking(false);
-    window.addEventListener("mousemove", move);
-    window.addEventListener("mousedown", down);
-    window.addEventListener("mouseup", up);
-    return () => {
-      window.removeEventListener("mousemove", move);
-      window.removeEventListener("mousedown", down);
-      window.removeEventListener("mouseup", up);
-    };
-  }, []);
+  
 
   // State
   const [cityInput, setCityInput] = useState("");
@@ -222,14 +202,6 @@ export default function App() {
         </div>
       )}
 
-      {/* Cursor */}
-      <div
-        ref={cursorRef}
-        className={`cursor-bolt ${clicking ? "clicking" : ""}`}
-        aria-hidden="true"
-      >
-        ⚡
-      </div>
 
       {/* Sky background */}
       <div className="sky-bg font-sans">
